@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ValidUserName
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            string[] users = Console.ReadLine().Split(", ").ToArray();
+
+            foreach (var word in users)
+            {
+                if (IsItValid(word))
+                {
+                    Console.WriteLine(word);
+                }
+            }
+        }
+
+        private static bool IsItValid(string word)
+        {
+            return IsLengthValid(word) && IsContain(word);
+        }
+
+        private static bool IsContain(string word)
+        {
+            foreach (var symbol in word)
+            {
+                if (!char.IsLetterOrDigit(symbol) && symbol != '_' && symbol != '-')
+                {
+                    return false;
+                }
+  
+            }
+            return true;
+        }
+
+        private static bool IsLengthValid(string word)
+        {
+            if (word.Length >= 3 && word.Length <= 16)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            } 
+
+        }
+    }
+}
