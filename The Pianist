@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApp36
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<string, string[]> pieces = new Dictionary<string, string[]>();
+
+            int n = int.Parse(Console.ReadLine());
+            
+
+            for (int i = 0; i < n; i++)
+            {
+                string[] data = Console.ReadLine()
+                    .Split("|", StringSplitOptions.RemoveEmptyEntries);
+
+                pieces.Add(data[0], new string[] { data[1], data[2] });
+            }
+
+          
+
+             while  (true)
+            {
+                string[] tooken = Console.ReadLine().Split("|", StringSplitOptions.RemoveEmptyEntries).ToArray();
+                if (tooken[0] == "Stop")
+                {
+                    break;
+                }
+
+
+                switch(tooken[0])
+                {
+
+                    case "Add":
+
+                        if (pieces.ContainsKey(tooken[1]))
+                        {
+                            Console.WriteLine($"{tooken[1]} is already in the collection!");
+                        }
+                        else
+                        {
+                            pieces.Add(tooken[1], new string[] { tooken[2], tooken[3]});
+
+                            Console.WriteLine($"{tooken[1]} by {tooken[2]} in {tooken[3]} added to the collection!");
+                           
+                        }
+
+                        break;
+                    case "Remove":
+                        if (pieces.ContainsKey(tooken[1]))
+                        {
+                            pieces.Remove(tooken[1]);
+                            Console.WriteLine($"Successfully removed {tooken[1]}!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Invalid operation! {tooken[1]} does not exist in the collection.");
+                        }
+                            break;
+                    case "ChangeKey":
+                        if (pieces.ContainsKey(tooken[1]))
+                        {
+                            pieces[tooken[1]][1] = tooken[2];
+
+                            Console.WriteLine($"Changed the key of {tooken[1]} to {tooken[2]}!");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Invalid operation! {tooken[0]} does not exist in the collection");
+                        }
+
+                            break;
+
+                }
+
+
+            }
+
+            var result = pieces
+              .OrderBy(p => p.Key)
+              .ThenBy(p => p.Value[0]);
+
+            foreach (var piece in result)
+            {
+                Console.WriteLine($"{piece.Key} -> Composer: {piece.Value[0]}, Key: {piece.Value[1]}");
+            }
+
+        }
+    }
+}
