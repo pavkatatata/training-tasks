@@ -1,0 +1,69 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Collections.Generic;
+
+using System.Text.RegularExpressions;
+
+namespace ConsoleApp37
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Regex digitRegex = new Regex(@"\d");
+            Regex emojiRegex = new Regex(@"(::([A-Z][a-z]{2,})::)|(\*\*([A-Z][a-z]{2,})\*\*)");
+
+            string text = Console.ReadLine();
+
+            MatchCollection allDigit = digitRegex.Matches(text);
+
+            double threshold = CalculateThreshold(allDigit);
+
+            Console.WriteLine($"Cool threshold: {threshold}");
+
+            MatchCollection emojiMatches = emojiRegex.Matches(text);
+
+            Console.WriteLine($"{emojiMatches.Count} emojis found in the text. The cool ones are:");
+
+            foreach (Match emojiMatch in emojiMatches)
+            {
+                string emojitText = emojiMatch.Groups[2].Value;
+                if (string.IsNullOrEmpty(emojitText))
+                {
+                    emojitText = emojiMatch.Groups[4].Value;
+                }
+
+                double coolness = GetAsciiSum(emojitText);
+
+                if (coolness > threshold)
+                {
+                    Console.WriteLine(emojiMatch.Value);
+                }
+            }
+
+        }
+
+        private static double GetAsciiSum(string text)
+        {
+            double result = 0;
+            foreach (char letter in text)
+            {
+                result += letter;
+            }
+            return result;
+
+        }
+
+        private static double CalculateThreshold(MatchCollection allDigit)
+        {
+            double result = 1;
+            foreach (Match digit in allDigit)
+            {
+                result *= int.Parse(digit.Value);
+            }
+            return result;
+        }
+    }
+}
