@@ -1,0 +1,137 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApp38
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Dictionary<string, int[]> collection = new Dictionary<string, int[]>();
+
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < n; i++)
+            {
+                string[] input = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToArray();
+                string name = input[0];
+                int HP = int.Parse(input[1]);
+                int MP = int.Parse(input[2]);
+
+                collection.Add(name, new int[] { HP, MP });
+
+
+            }
+
+            while (true)
+            {
+                string[] tooken = Console.ReadLine().Split(" - ", StringSplitOptions.RemoveEmptyEntries).ToArray();
+                if (tooken[0] == "End")
+                {
+                    break;
+                }
+
+                switch (tooken[0])
+                {
+                    case "CastSpell":
+                        string heroName = tooken[1];
+                        int mpNeeded = int.Parse(tooken[2]);
+                        string spellName = tooken[3];
+
+                        int heroNameValue = collection[heroName][1];
+                        if ( heroNameValue >= mpNeeded )
+                        {
+                            collection[heroName][1] -= mpNeeded;
+                            Console.WriteLine($"{heroName} has successfully cast {spellName} and now has {collection[heroName][1]} MP!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{heroName} does not have enough MP to cast {spellName}!");
+                        }
+
+                        break;
+
+                    case "TakeDamage":
+                         heroName = tooken[1];
+                        int damage = int.Parse(tooken[2]);
+                        string atacker = tooken[3];
+
+                        collection[heroName][0] -= damage;
+                        if (collection[heroName][0] > 0)
+                        {
+                            Console.WriteLine($"{heroName} was hit for {damage} HP by {atacker} and now has {collection[heroName][0]} HP left!");
+                        }
+                        else
+                        {
+
+                            collection.Remove(heroName);
+                            Console.WriteLine($"{heroName} has been killed by {atacker}!");
+                        }
+                        break;
+
+                    case "Recharge":
+
+                        heroName = tooken[1];
+                        int recharge = int.Parse(tooken[2]);
+
+                        
+                        bool flag1 = (collection[heroName][1] + recharge) > 200;
+
+                        if ( flag1 == true)
+                        {
+                            int residue = 200 - collection[heroName][1];
+                            collection[heroName][1] = 200;
+                            Console.WriteLine($"{heroName} recharged for {residue} MP!");
+
+                        }
+                        else
+                        {
+                            collection[heroName][1] += recharge;
+                            Console.WriteLine($"{heroName} recharged for {recharge} MP!");
+                        }
+                        
+                        break;
+
+                    case "Heal":
+                        heroName = tooken[1];
+                        int rechargeHP = int.Parse(tooken[2]);
+
+                        bool flag = (collection[heroName][0] + rechargeHP) > 100;
+                        if ((flag == true))
+                        {
+                            int residue = 100 - collection[heroName][0];
+                            collection[heroName][0] = 100;
+                            Console.WriteLine($"{heroName} healed for {residue} HP!");
+
+                        }
+                        else
+                        {
+                            collection[heroName][0] += rechargeHP;
+                            Console.WriteLine($"{heroName} healed for {rechargeHP} HP!");
+                        }
+
+                        
+                        break;
+                }
+
+            }
+
+            var result = collection
+                    .OrderByDescending(x => x.Value[0])
+                    .ThenBy(x => x.Key);
+
+            foreach (var item in result)
+            {
+                Console.WriteLine($"{item.Key}");
+                Console.WriteLine($" HP: {item.Value[0]}");
+                Console.WriteLine($" MP: {item.Value[1]}");
+
+            }
+
+
+        }
+    }
+}
