@@ -1,0 +1,63 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
+namespace ConsoleApp218
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string pattern = @"([#|@])(?<name>[A-Za-z]{3,})\1{2}(?<name2>[A-Za-z]{3,})\1"; Regex regex = new Regex(pattern);
+            string sentence = Console.ReadLine(); 
+            var matches = regex.Matches(sentence);
+            var validPairs = new Dictionary<string, string>();
+            foreach (Match match in matches)
+            {
+                GroupCollection groups = match.Groups;
+                string nameOne = groups["name"].Value;
+                string nameTwo = groups["name2"].Value;
+                string nameTwoReversed = string.Empty;
+                for (int i = nameTwo.Length - 1; i >= 0; i--)
+                {
+                    nameTwoReversed += nameTwo[i];
+                }
+                if (nameOne == nameTwoReversed)
+                {
+                    validPairs.Add(nameOne, nameTwo);
+                }
+            }
+            if (matches.Count == 0)
+            {
+                Console.WriteLine($"No word pairs found!");
+            }
+            else
+            {
+                Console.WriteLine($"{matches.Count} word pairs found!");
+            }
+            if (validPairs.Count == 0)
+            {
+                Console.WriteLine("No mirror words!");
+            }
+            else
+            {
+                Console.WriteLine($"The mirror words are:");
+                int count = 1;
+                foreach (var item in validPairs)
+                {
+                    if (count < validPairs.Count)
+                    {
+                        Console.Write($"{item.Key} <=> {item.Value}, ");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{item.Key} <=> {item.Value}");
+                    }
+                    count++;
+                }
+            }
+        }
+    }
+}
+
