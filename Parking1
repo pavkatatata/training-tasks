@@ -1,0 +1,74 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+
+namespace ConsoleApp43
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Dictionary<string, string> collection = new Dictionary<string, string>();
+
+            int n = int.Parse(Console.ReadLine());
+
+
+            for (int i = 0; i < n; i++)
+            {
+
+                string[] tooken = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToArray();
+
+                string command = tooken[0];
+                string username = tooken[1];
+                
+
+
+                if (command == "register")
+                {
+                    string licensePlateNumber = tooken[2];
+                    if (collection.ContainsKey(username))
+                    {
+                        Console.WriteLine($"ERROR: already registered with plate number {licensePlateNumber}");
+                    }
+                    else
+                    {
+                        collection.Add(username, licensePlateNumber);
+                        Console.WriteLine($"{username} registered {licensePlateNumber} successfully");
+                    }
+
+
+                }
+                else if ( command == "unregister")
+                {
+                    if (collection.ContainsKey(username))
+                    {
+                        collection.Remove(username);
+                        Console.WriteLine($"{username} unregistered successfully");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"ERROR: user {username} not found");
+                    }
+
+                }
+
+            }
+
+            foreach (var item in collection)
+            {
+                Console.WriteLine($"{item.Key} => {item.Value}");
+            }
+
+
+        }
+
+
+
+
+
+
+
+    }
+}
