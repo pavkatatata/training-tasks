@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ConsoleApp44
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Dictionary<string, List<string>> collection = new Dictionary<string, List<string>>();
+
+
+            while (true)
+            {
+
+                string[] tooken = Console.ReadLine().Split(" -> ").ToArray();
+
+                if (tooken[0] == "End")
+                {
+                    break;
+                }
+                string company = tooken[0];
+                string id = tooken[1];
+                if (collection.ContainsKey(company))
+                {
+                    if (collection[company].Contains(id))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        collection[company].Add(id);
+                    }
+                }
+                else
+                {
+                    collection.Add(company, new List<string> { id });
+                }
+
+
+            }
+
+            var result = collection
+                .OrderBy(x => x.Key);
+
+            foreach (var item in result)
+            {
+                Console.WriteLine($"{item.Key}");
+                Console.WriteLine($"-- {string.Join("\n-- ", item.Value)}");
+
+            }
+
+
+        }
+    }
+}
