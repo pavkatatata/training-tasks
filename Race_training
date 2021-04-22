@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace ConsoleApp49
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            string[] names = Console.ReadLine().Split(", ").ToArray();
+
+            Dictionary<string, int> collection = new Dictionary<string, int>();
+
+            foreach (var item in names)
+            {
+                if (!collection.ContainsKey(item))
+                {
+                    collection.Add(item, 0);
+
+                }
+
+            }
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+                int distance = 0;
+
+                if (input == "end of race")
+                {
+                    break;
+                }
+
+                Regex regexName = new Regex(@"[A-Za-z]");
+
+                MatchCollection matches = regexName.Matches(input);
+
+                string name = string.Empty;
+
+                foreach (Match item in matches)
+                {
+                    name += item;
+                }
+
+                Regex regexNumbers = new Regex(@"[0-9]");
+
+                MatchCollection matchesNumbers = regexNumbers.Matches(input);
+
+                if (collection.ContainsKey(name))
+                {
+
+                    foreach (Match item in matchesNumbers)
+                    {
+                        distance += int.Parse(item.Value);
+                    }
+
+                    collection[name] += distance;
+
+
+                }
+
+            }
+
+            var result = collection.OrderByDescending(x => x.Value);
+
+            int counter = 1;
+
+            foreach (var item in result)
+            {
+                if (counter == 1)
+                {
+                    Console.WriteLine($"1st place: {item.Key}");
+                }
+                
+                else if ( counter == 2)
+                {
+                    Console.WriteLine($"2nd place: {item.Key}");
+                }
+                
+                else if ( counter == 3)
+                {
+                    Console.WriteLine($"3rd place: {item.Key}");
+                }
+
+                counter++;
+
+            }
+
+
+
+        }
+    }
+}
