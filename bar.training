@@ -1,0 +1,51 @@
+using System;
+using System.Text.RegularExpressions;
+
+namespace ConsoleApp51
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Regex regex = new Regex(@"^%(?<customer>[A-Z][a-z]+)%[^|$%.]*<(?<product>\w+)>[^|$%.]*\|(?<count>\d+)\|[^|$%.]*?(?<price>[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\$");
+
+            double totalIncome = 0;
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+                if (input == "end of shift")
+                {
+                    break;
+                }
+
+                Match match = regex.Match(input);
+
+                if (!match.Success)
+                {
+                    continue;
+                }
+
+                string customer = match.Groups["customer"].Value;
+                string product = match.Groups["product"].Value;
+                double price = double.Parse(match.Groups["price"].Value);
+                int quantity = int.Parse(match.Groups["count"].Value);
+
+                double totalCustomerIncome = price * quantity;
+
+                Console.WriteLine($"{customer}: {product} - {totalCustomerIncome}");
+
+                totalIncome += totalCustomerIncome;
+
+
+            }
+
+            Console.WriteLine($"Total income: {totalIncome:f2}");
+
+
+
+        }
+
+    }
+}
+
