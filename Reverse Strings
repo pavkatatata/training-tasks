@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+
+namespace ConsoleApp53
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            string input = Console.ReadLine();
+
+            Stack<char> conbo = new Stack<char>(input);
+
+            for (int i = conbo.Count; i > 0; i--)
+            {
+
+                Console.Write(conbo.Pop());
+            }
+
+
+
+        }
+    }
+}
