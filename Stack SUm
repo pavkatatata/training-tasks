@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+
+namespace ConsoleApp53
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            int[] arr = Console.ReadLine()
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)
+                .ToArray();
+
+            Stack<int> numbers = new Stack<int>(arr);
+
+            string input = Console.ReadLine().ToUpper();
+
+            while (true)
+            {
+                string[] tooken = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                if (tooken[0] == "END")
+                {
+                    break;
+                }
+                if (tooken[0] == "ADD")
+                {
+                    numbers.Push(int.Parse(tooken[1]));
+                    numbers.Push(int.Parse(tooken[2]));
+
+                }
+                if (tooken[0] == "REMOVE")
+                {
+                    int countNumber = int.Parse(tooken[1]);
+                    if (numbers.Count >= countNumber)
+                    {
+                        for (int i = 0; i < countNumber; i++)
+                        {
+                            numbers.Pop();
+                        }
+
+                    }
+
+
+                }
+                input = Console.ReadLine().ToUpper();
+            }
+
+            Console.WriteLine($"Sum: {numbers.Sum()}");
+
+
+        }
+    }
+}
