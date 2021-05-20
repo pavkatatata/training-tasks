@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ConsoleApp55
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+
+            int[] numbers = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+
+            Queue<int> shibaInu = new Queue<int>(numbers);
+
+            while (shibaInu.Count > 1)
+            {
+
+                for (int i = 0; i < numbers.Length; i++)
+                {
+
+
+                    if (numbers[i] % 2 == 0)
+                    {
+                        Console.Write(shibaInu.Dequeue());
+                        if (shibaInu.Count > 1)
+                        {
+                            Console.Write($", ");
+                        }
+                    }
+                    else
+                    {
+                        shibaInu.Dequeue();
+
+                    }
+                    
+                }
+
+
+            }
+            
+
+
+
+        }
+    }
+}
