@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp63
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+
+            SortedDictionary<string, double> fruits = new SortedDictionary<string, double>();
+
+            fruits["orange"] = 2.50;
+            fruits["kiwi"] = 1.23;
+            fruits["banana"] = 2.20;
+
+            foreach (var item in fruits)
+            {
+                Console.WriteLine($"{item.Key}: {item.Value}");
+            }
+
+
+
+
+
+        }
+    }
+}
