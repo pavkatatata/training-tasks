@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ConsoleApp65
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+
+            string command;
+
+            HashSet<string> parkingLot = new HashSet<string>();
+
+            while ((command = Console.ReadLine()) != "END")
+            {
+                string[] tokens = command.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+                string direction = tokens[0];
+                string number = tokens[1];
+
+                if (direction == "IN")
+                {
+                    parkingLot.Add(number); 
+                }
+                else if (parkingLot.Contains(number))
+                {
+                    parkingLot.Remove(number);
+                }
+            }
+            if (parkingLot.Count == 0)
+            {
+                Console.WriteLine("Parking Lot is Empty");
+            }
+
+            foreach (var item in parkingLot)
+            {
+                Console.WriteLine(item);
+            }
+
+
+
+
+        }
+    }
+}
