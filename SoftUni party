@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ConsoleApp65
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            bool partyStarted = false;
+
+            SortedSet<string> partyPeople = new SortedSet<string>();
+
+            string command;
+
+            while ((command = Console.ReadLine()) != "END")
+            {
+
+                if (command == "PARTY")
+                {
+                    partyStarted = true;
+
+
+                    continue;
+                }
+                if (partyStarted)
+                {
+                    partyPeople.Remove(command);
+                }
+                else
+                {
+                    partyPeople.Add(command);
+                }
+
+            }
+
+            Console.WriteLine(partyPeople.Count);
+
+            foreach (var person in partyPeople)
+            {
+                Console.WriteLine(person);
+            }
+
+
+
+
+        }
+    }
+}
