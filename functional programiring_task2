@@ -1,0 +1,32 @@
+using System;
+
+namespace FunctionalPrograming
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Person pesho = new Person() { Age = 15 };
+
+            Console.WriteLine(GrowByYears(pesho.Age, 10));
+
+            pesho.Age = 23;
+
+            Console.WriteLine(GrowByYears(pesho.Age, 10));
+
+
+        }
+
+        private static int GrowByYears(int age, int years)
+        {
+            return age + years;
+        }
+
+    }
+}
+
+
+    
+
+   
+
