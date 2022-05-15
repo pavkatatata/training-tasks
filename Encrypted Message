@@ -1,0 +1,76 @@
+using System;
+
+namespace CaesarCipher
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            char[] alphabet = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+                'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', };
+
+            Console.WriteLine("Enter your secret message: ");
+            string input = Console.ReadLine().ToLower();
+
+
+            char[] secretMessage = input.ToCharArray();
+            char[] encryptedMessage = new char[secretMessage.Length];
+            char[] decryptedMessage = new char[encryptedMessage.Length];
+
+            Encrypt(encryptedMessage, secretMessage, alphabet);
+
+
+            string encodedString = String.Join("", encryptedMessage);
+            Console.WriteLine($"Your encoded message is {encodedString}");
+
+            Decrypt(encryptedMessage, decryptedMessage, alphabet);
+
+            string decrypted = String.Join("", decryptedMessage);
+            Console.WriteLine($"Your deccded message again is: {decrypted}");
+        }
+
+        private static void Decrypt(char[] encryptedMessage, char[] decryptedMessage, char[] alphabet)
+        {
+            for (int i = 0; i < encryptedMessage.Length; i++)
+            {
+                char letter = encryptedMessage[i];
+                int letterPosition = Array.IndexOf(alphabet, letter);
+                
+                int newLetterPosition = letterPosition - 3;
+                if (newLetterPosition == 0)
+                {
+                    newLetterPosition = 26;
+                }
+                else if (newLetterPosition == -1)
+                {
+                    newLetterPosition = 25;
+                }
+                else if (newLetterPosition == -2)
+                {
+                    newLetterPosition = 24;
+                }
+             
+                char letterDecodded = alphabet[newLetterPosition];
+                decryptedMessage[i] = letterDecodded;
+
+            }
+
+
+        }
+
+        private static void Encrypt(char[] encryptedMessage, char[] secretMessage, char[] alphabet)
+        {
+
+            for (int i = 0; i < secretMessage.Length; i++)
+            {
+
+                char letter = secretMessage[i];
+                int letterPostion = Array.IndexOf(alphabet, letter);
+                int newLetterPostion = (letterPostion + 3) % 26;
+                char letterEncodded = alphabet[newLetterPostion];
+                encryptedMessage[i] = letterEncodded;
+            }
+
+        }
+    }
+}
